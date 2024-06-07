@@ -16,6 +16,7 @@ colors = [0 0 0.1724; 1 0 0; 0 0 1; 0 1 0];
 %% Initializing Figures
 lbl.XString = '$x$ (km)'; lbl.YString = '$y$ (km)';
 initialize_figures('n', 1, 'spacing', {[50 100 700 700]},'lbl', lbl, 'axs', {'equal'}); 
+set(gca, 'FontName', 'Times', 'FontSize', 14);
 
 % Loading Europa
 imageFile = '/Users/bhanson/OneDrive - UC San Diego/UCSD/Conferences/KePASSA2024/Figures/png/Slides/Europa_Map.png';
@@ -23,12 +24,13 @@ europaImg = imread(imageFile);
 [X, Y, Z] = sphere(100);  
 X = X.*const.r + (1-const.mu)*const.LU; Y = Y.*const.r; Z = Z.*const.r;
 surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', europaImg, 'EdgeColor', 'none', 'HandleVisibility', 'off');
-scatter(1.02046139*const.LU,0,50,'d','k','HandleVisibility', 'off');
+scatter(1.02046139*const.LU,0,75,'d','k','LineWidth', 2, 'HandleVisibility', 'off');
 drawnow;
 
 lbl.XString = '$v_x$ (km/s)';
 lbl.YString = '$v_y$ (km/s)';
 initialize_figures('n', 2, 'spacing', {[800 100 700 700]}, 'lbl', lbl, 'axs', {'equal'}); 
+set(gca, 'FontName', 'Times', 'FontSize', 14);
 
 %% Truth
 num_dist = 16; 
@@ -49,11 +51,13 @@ t = t.*const.TU;
 
 %% Plotting Nominal Trajectories
 figure(1); 
-plot(x(:,1),x(:,2),'r','LineWidth',2,'DisplayName','Nominal');
+plot(x((t <= 14*3600),1),x((t <= 14*3600),2),'r-','LineWidth',2,'DisplayName','Nominal');
+plot(x(:,1),x(:,2),'r--','LineWidth',1,'DisplayName','Nominal');
 %scatter3(x(1,1),x(2,1),x(3,1),50,'filled','MarkerFaceColor','r','HandleVisibility','off');
 drawnow;
 figure(2); 
-plot(x(:,3),x(:,4),'r','LineWidth', 2, 'DisplayName','Nominal');
+plot(x((t <= 14*3600),3),x((t <= 14*3600),4),'r-','LineWidth',2,'DisplayName','Nominal');
+plot(x(:,3),x(:,4),'r--','LineWidth', 1, 'DisplayName','Nominal');
 %scatter3(x(4,1),x(5,1),x(6,1),50,'filled','MarkerFaceColor','r','HandleVisibility','off');
 drawnow;
 
